@@ -23,7 +23,7 @@ fn main() -> Result<(), Box<dyn Error>> {
         let id = header.split(' ').collect::<Vec<&str>>()[1].parse::<i32>().unwrap();
 
         let body = sections[1];
-        let highest = body.split(';').fold(vec!(12, 13, 14), |highest, round| {
+        let highest = body.split(';').fold(vec!(0, 0, 0), |highest, round| {
             let mut cubes = vec!(0, 0, 0);
 
             round.split(',').for_each(|cube| {
@@ -42,11 +42,16 @@ fn main() -> Result<(), Box<dyn Error>> {
             );
         });
 
-        if highest.iter().enumerate().any(|(i, _)| highest[i] > max[i]) {
-            total
-        } else {
-            total + id
-        }
+        // Part1
+        // if highest.iter().enumerate().any(|(i, _)| highest[i] > max[i]) {
+        //     total
+        // } else {
+        //     total + id
+        // }
+        
+        // Part2
+        total + highest[0] * highest[1] * highest[2]
+
     });
 
 
