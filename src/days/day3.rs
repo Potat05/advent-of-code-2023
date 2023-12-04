@@ -1,17 +1,7 @@
-use std::{fs, env, error::Error};
 
 
 
-fn main() -> Result<(), Box<dyn Error>> {
-    let args: Vec<String> = env::args().collect();
-    if args.len() != 2 {
-        return Ok(());
-    }
-    let path = &args[1];
-    let input = fs::read_to_string(path)?;
-    
-
-
+pub fn day3(input: String, part: i32) -> i32 {
     let grid: Vec<char> = input.chars().filter(|char| !char.is_control()).collect();
     let width: i32 = input.find('\n').unwrap() as i32 - 1;
     let height: i32 = input.lines().into_iter().count().try_into().unwrap();
@@ -69,13 +59,7 @@ fn main() -> Result<(), Box<dyn Error>> {
         }
     }
 
-
-
-    println!("Total: {}", total);
-
-
-
-    Ok(())
+    total
 }
 
 

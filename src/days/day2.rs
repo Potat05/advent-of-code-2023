@@ -1,17 +1,7 @@
-use std::{fs, env, error::Error};
 
 
 
-fn main() -> Result<(), Box<dyn Error>> {
-    let args: Vec<String> = env::args().collect();
-    if args.len() != 2 {
-        return Ok(());
-    }
-    let path = &args[1];
-    let input = fs::read_to_string(path)?;
-    
-
-
+pub fn day2(input: String, part: i32) -> i32 {
     let colors: Vec<&str> = vec!("red", "green", "blue");
     let max: Vec<i32> = vec!(12, 13, 14);
 
@@ -42,24 +32,19 @@ fn main() -> Result<(), Box<dyn Error>> {
             );
         });
 
-        // Part1
-        // if highest.iter().enumerate().any(|(i, _)| highest[i] > max[i]) {
-        //     total
-        // } else {
-        //     total + id
-        // }
-        
-        // Part2
-        total + highest[0] * highest[1] * highest[2]
+        if part == 1 {
+            if highest.iter().enumerate().any(|(i, _)| highest[i] > max[i]) {
+                total
+            } else {
+                total + id
+            }
+        } else {
+            total + highest[0] * highest[1] * highest[2]
+        }
 
     });
 
-
-    println!("Total: {}", total);
-
-
-
-    Ok(())
+    total
 }
 
 
