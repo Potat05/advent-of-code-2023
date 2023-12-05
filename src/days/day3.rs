@@ -11,52 +11,67 @@ pub fn day3(input: String, part: i32) -> i32 {
         }
         grid[(x + y * width) as usize]
     };
-
-    let mut total = 0;
-
-    for y in 0..height {
-        let mut x = -1;
-        while x < width {
-            x += 1;
-
-            if !(get(x, y).is_digit(10)) { continue; }
-
-
-            // Get part number.
-            let mut digits: String = String::new();
-            // Get full number
-            for dx in x..width {
-                if get(dx, y).is_digit(10) {
-                    digits += &get(dx, y).to_string();
+    // num, numWidth, numX, numY
+    let get_num = |mut x: i32, y: i32| -> Option<(i32, i32, i32, i32)> {
+        if get(x, y).is_digit(10) {
+            while get(x - 1, y).is_digit(10) {
+                x -= 1;
+            }
+    
+            let mut digits = String::new();
+    
+            for x in x..width {
+                let char = get(x, y);
+                if char.is_digit(10) {
+                    digits.push(char);
                 } else {
                     break;
                 }
             }
-
-
-            // If part is next to symbol
-            let mut area: Vec<(i32, i32)> = vec![];
-            
-            for dx in -1..(digits.len() as i32 + 1) {
-                area.push((x + dx, y - 1));
-                area.push((x + dx, y + 1));
-            }
-            area.push((x - 1, y));
-            area.push((x + digits.len() as i32, y));
-
-            if area.iter().any(|check| {
-                let char = get(check.0, check.1);
-                if char.is_digit(10) { false }
-                else if char == '.' { false }
-                else { true }
-            }) {
-                total += digits.parse::<i32>().unwrap();
-            }
-
-
-            x += (digits.len() as i32) - 1;
-
+    
+            Some((digits.parse().unwrap(), digits.len().try_into().unwrap(), x, y))
+        } else {
+            None
         }
+    };
+
+    let mut total = 0;
+
+    if part == 1 {
+        for y in 0..height {
+            let mut x = 0;
+            while x < width {
+                match get_num(x, y) {
+                    None => {
+                        x += 1;
+                    },
+                    Some((num, width, test_x, test_y)) => {
+                        let mut area: Vec<(i32, i32)> = vec![];
+
+                        for dx in -1..=width {
+                            area.push((x + dx, y - 1));
+                            area.push((x + dx, y + 1));
+                        }
+                        area.push((x - 1, y));
+                        area.push((x + width, y));
+
+                        if area.iter().any(|check| {
+                            let char = get(check.0, check.1);
+                            if char.is_digit(10) { false }
+                            else if char == '.' { false }
+                            else { true }
+                        }) {
+                            total += num;
+                        }
+
+                        x += width;
+                    }
+                }
+    
+            }
+        }
+    } else {
+        
     }
 
     total
