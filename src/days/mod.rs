@@ -15,7 +15,7 @@ pub enum Days {
 }
 
 impl Days {
-    pub fn solve(self, input: String, part: i32) -> i32 {
+    pub fn solve(self, input: String, part: i32) -> i64 {
         match self {
             Days::Day1 => day1(input, part),
             Days::Day2 => day2(input, part),

@@ -1,7 +1,7 @@
 
 
 
-pub fn day1(input: String, part: i32) -> i32 {
+pub fn day1(input: String, part: i32) -> i64 {
     input.lines().fold(0, |total, line| {
 
         let digits: Vec<char> = if part == 1 {
@@ -36,7 +36,7 @@ pub fn day1(input: String, part: i32) -> i32 {
 
         let joined_digits = format!("{}{}", digits.first().unwrap(), digits.last().unwrap());
 
-        let num = joined_digits.parse::<i32>().unwrap();
+        let num = joined_digits.parse::<i64>().unwrap();
 
         total + num
     })

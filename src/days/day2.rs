@@ -1,7 +1,7 @@
 
 
 
-pub fn day2(input: String, part: i32) -> i32 {
+pub fn day2(input: String, part: i32) -> i64 {
     let colors: Vec<&str> = vec!("red", "green", "blue");
     let max: Vec<i32> = vec!(12, 13, 14);
 
@@ -36,10 +36,10 @@ pub fn day2(input: String, part: i32) -> i32 {
             if highest.iter().enumerate().any(|(i, _)| highest[i] > max[i]) {
                 total
             } else {
-                total + id
+                total + i64::from(id)
             }
         } else {
-            total + highest[0] * highest[1] * highest[2]
+            total + i64::from(highest[0] * highest[1] * highest[2])
         }
 
     });
